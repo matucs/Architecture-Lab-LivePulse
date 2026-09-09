@@ -1,26 +1,168 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f7f7f5;
+  --bg-elevated: #ffffff;
+  --bg-inset: #eeeeec;
+  --fg: #17181a;
+  --fg-muted: #55585e;
+  --fg-faint: #8a8d93;
+  --border: #dcdcda;
+  --border-strong: #c2c2bf;
+  --accent: #2f6f4f;
+  --accent-fg: #ffffff;
+  --measured: #2f6f4f;
+  --measured-bg: #e6f0ea;
+  --projection: #9a6b1a;
+  --projection-bg: #f5ead2;
+  --current: #2f6f4f;
+  --danger: #a13d33;
+  --danger-bg: #f6e4e1;
+  --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101113;
+    --bg-elevated: #17181b;
+    --bg-inset: #1d1f23;
+    --fg: #eceeef;
+    --fg-muted: #a3a7ad;
+    --fg-faint: #6d7178;
+    --border: #2a2c30;
+    --border-strong: #3a3d42;
+    --accent: #5fb98a;
+    --accent-fg: #0b1210;
+    --measured: #5fb98a;
+    --measured-bg: #16261f;
+    --projection: #d9a24b;
+    --projection-bg: #2b2311;
+    --current: #5fb98a;
+    --danger: #e08277;
+    --danger-bg: #2c1917;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #101113;
+  --bg-elevated: #17181b;
+  --bg-inset: #1d1f23;
+  --fg: #eceeef;
+  --fg-muted: #a3a7ad;
+  --fg-faint: #6d7178;
+  --border: #2a2c30;
+  --border-strong: #3a3d42;
+  --accent: #5fb98a;
+  --accent-fg: #0b1210;
+  --measured: #5fb98a;
+  --measured-bg: #16261f;
+  --projection: #d9a24b;
+  --projection-bg: #2b2311;
+  --current: #5fb98a;
+  --danger: #e08277;
+  --danger-bg: #2c1917;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-inset: var(--bg-inset);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-faint: var(--fg-faint);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border);
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--fg);
+  overflow-x: hidden;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--sans);
+}
+
+.font-mono-tight {
+  font-family: var(--mono);
+  letter-spacing: -0.01em;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  white-space: normal;
+  max-width: 100%;
+}
+
+.badge-measured {
+  color: var(--measured);
+  background: var(--measured-bg);
+  border-color: transparent;
+}
+
+.badge-projection {
+  color: var(--projection);
+  background: var(--projection-bg);
+  border-color: transparent;
+}
+
+.badge-current {
+  color: var(--current);
+  background: var(--measured-bg);
+  border-color: transparent;
+}
+
+.card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+}
+
+/* React Flow theme overrides */
+.react-flow {
+  background: var(--bg-inset);
+}
+.react-flow__attribution {
+  display: none;
+}
+.react-flow__controls {
+  box-shadow: none;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.react-flow__controls-button {
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+  color: var(--fg);
+}
+.react-flow__controls-button:hover {
+  background: var(--bg-inset);
 }
