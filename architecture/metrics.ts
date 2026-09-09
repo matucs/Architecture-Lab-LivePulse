@@ -1,4 +1,4 @@
-import { repoFile } from "./github";
+import { repoFile, SCALING_DEMO_REPO } from "./github";
 
 export interface MeasuredMetric {
   id: string;
@@ -67,10 +67,20 @@ export const metrics: MeasuredMetric[] = [
   },
   {
     id: "multi-instance-ws",
-    label: "Multi-instance WebSocket fan-out under load",
-    value: "Architecturally sound, never run with more than 1 instance",
-    kind: "projection",
-    source: "The Redis pub/sub fan-out design supports N gateway instances by construction, but this project has only ever run exactly one instance — stated as an explicit, named gap, not a tested property.",
-    sourceLink: { label: "engineering-review.md", url: repoFile("docs/engineering-review.md") },
+    label: "Multi-instance WebSocket fan-out — 80 connections",
+    value: "80/80 delivered across 2 real instances · p99 6.9ms",
+    kind: "measured",
+    source:
+      "Validated separately, out-of-band from LivePulse itself: a standalone tool ran two real, unmodified LivePulse backend processes against one shared Redis, split real WebSocket connections across both, and published one real update. Both instances received it, 100% delivery. LivePulse's own public deployment still runs exactly one process (ADR-008) — this measures the design, not production.",
+    sourceLink: { label: "scaling-demo-LivePulse", url: SCALING_DEMO_REPO },
+  },
+  {
+    id: "multi-instance-ws-300",
+    label: "Multi-instance WebSocket fan-out — 300 connections",
+    value: "300/300 delivered across 2 real instances · p99 13.7ms",
+    kind: "measured",
+    source:
+      "Same tool and method at higher load (150 connections per instance). Still single-machine, still far below LivePulse's documented 500-per-instance ceiling — not a saturation test, see the tool's README for exactly what this does and doesn't prove.",
+    sourceLink: { label: "scaling-demo-LivePulse", url: SCALING_DEMO_REPO },
   },
 ];
